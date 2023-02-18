@@ -12,4 +12,7 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
+
+    @Query(value = "SELECT * FROM User WHERE username =:username", nativeQuery = true)
+    User findByUsername(String username);
 }
