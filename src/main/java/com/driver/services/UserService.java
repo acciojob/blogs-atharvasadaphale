@@ -13,33 +13,24 @@ public class UserService {
     @Autowired
     UserRepository userRepository3;
 
-    @Autowired
-    BlogService blogService3;
-
-    public void createUser(User user){
+    public User createUser(String username, String password){
+        User user = new User(username, password);
         userRepository3.save(user);
-        //By cascading effect, child will automatically be saved (cardRepo will be saved)
+        return user;
     }
 
     public void deleteUser(int userId){
-        User user= userRepository3.findById(userId).get();
-
-        userRepository3.delete(user);
+        userRepository3.deleteById(userId);
     }
 
-    public void updateUser(User user){
-        User originaluser = userRepository3.findById(user.getId()).get();
-
-        //We will keep the other properties as it is : and only change the required parameters
-
-        originaluser.setPassword(user.getPassword());
-
+    public User updateUser(Integer id, String password)  {
+        User user;
+//        if(!userRepository3.findById(id).isPresent()) {
+//           throw new Exception();
+//        }
+        user = userRepository3.findById(id).get();
+        user.setPassword(password);
         userRepository3.save(user);
-    }
-
-    public User findUserByUsername(String username){
-
-        //custom query
-        return userRepository3.findByUsername(username);
+        return user;
     }
 }

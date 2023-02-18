@@ -1,39 +1,41 @@
 package com.driver.models;
 
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name="user")
-public class User {
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Column(unique = true)
     private String username;
-
     private String password;
+    private String firstName = "test";
+    private String lastName = "test";
 
-    private String fname;
-
-    private String lname;
-
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<Blog> blogsWritten;
+    //Mapping
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JoinColumn
+    private List<Blog> blogList;
 
     public User() {
+
     }
 
-    public User(int id, String username, String password, String fname, String lname, List<Blog> blogsWritten) {
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(int id, String username, String password, String firstName, String lastName, List<Blog> blogList) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.fname = fname;
-        this.lname = lname;
-        this.blogsWritten = blogsWritten;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.blogList = blogList;
     }
 
     public int getId() {
@@ -60,27 +62,27 @@ public class User {
         this.password = password;
     }
 
-    public String getFname() {
-        return fname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLname() {
-        return lname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLname(String lname) {
-        this.lname = lname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public List<Blog> getBlogsWritten() {
-        return blogsWritten;
+    public List<Blog> getBlogList() {
+        return blogList;
     }
 
-    public void setBlogsWritten(List<Blog> blogsWritten) {
-        this.blogsWritten = blogsWritten;
+    public void setBlogList(List<Blog> blogList) {
+        this.blogList = blogList;
     }
 }

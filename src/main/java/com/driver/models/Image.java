@@ -1,22 +1,15 @@
 package com.driver.models;
 
-
-import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
-@Table(name="image")
-public class Image {
-
+@Table(name = "Image")
+public class Image{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String description;
-
-    private String dimension;
+    private String dimensions;
 
     @ManyToOne
     @JoinColumn
@@ -25,9 +18,16 @@ public class Image {
     public Image() {
     }
 
-    public Image( Blog blog, String description, String dimension) {
+    public Image(Blog blog, String description, String dimensions) {
         this.description = description;
-        this.dimension = dimension;
+        this.dimensions = dimensions;
+        this.blog = blog;
+    }
+
+    public Image(int id, String description, String dimensions, Blog blog) {
+        this.id = id;
+        this.description = description;
+        this.dimensions = dimensions;
         this.blog = blog;
     }
 
@@ -47,11 +47,19 @@ public class Image {
         this.description = description;
     }
 
-    public String getDimension() {
-        return dimension;
+    public String getDimensions() {
+        return dimensions;
     }
 
-    public void setDimension(String dimension) {
-        this.dimension = dimension;
+    public void setDimensions(String dimensions) {
+        this.dimensions = dimensions;
+    }
+
+    public Blog getBlog() {
+        return blog;
+    }
+
+    public void setBlog(Blog blog) {
+        this.blog = blog;
     }
 }
